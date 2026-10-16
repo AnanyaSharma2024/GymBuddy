@@ -1,0 +1,66 @@
+version: '3.9'
+
+# Container networking:
+# - All three services join the default `gym-buddy-net` bridge network that
+#   Compose creates automatically for this project.
+# - The `backend` service reaches MongoDB and Redis using their SERVICE
+#   NAMES as hostnames (`mongo`, `redis`) - Docker's embedded DNS resolves
+#   these within the network, so MONGO_URI/REDIS_URL in .env point at
+#   `mongo`/`redis`, not `localhost`, when running via Compose.
+# - Only the backend's port is published to the host; mongo/redis stay
+#   internal to the network unless you add `ports:` for local debugging.
+services:
+  backend:
+    build: .
+    container_name: gym-buddy-backend
+    restart: unless-stopped
+    ports:
+      - '5000:5000'
+    env_file:
+      - .env
+    environment:
+      MONGO_URI: mongodb://mongo:27017/gym_buddy
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      mongo:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - gym-buddy-net
+
+  mongo:
+    image: mongo:7
+    container_name: gym-buddy-mongo
+    restart: unless-stopped
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - gym-buddy-net
+
+  redis:
+    image: redis:7-alpine
+    container_name: gym-buddy-redis
+    restart: unless-stopped
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - gym-buddy-net
+
+volumes:
+  mongo-data:
+  redis-data:
+
+networks:
+  gym-buddy-net:
+    driver: bridge

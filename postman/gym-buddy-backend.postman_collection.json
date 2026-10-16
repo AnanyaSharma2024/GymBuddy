@@ -1,0 +1,98 @@
+{
+  "info": {
+    "name": "Find Me a Gym Buddy - Backend API",
+    "description": "REST API collection. Set the {{baseUrl}} variable (default http://localhost:5000/api). Auth endpoints rely on cookies - enable 'Automatically follow redirects' and cookie jar in Postman, or copy accessToken/refreshToken from the JSON response into the Authorization Bearer header for mobile-style testing.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000/api" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Google Init (get consent URL)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/auth/google/init",
+            "body": { "mode": "raw", "raw": "{\n  \"codeChallenge\": \"<PKCE code_challenge from frontend>\"\n}" }
+          }
+        },
+        {
+          "name": "Google Callback (exchange code)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/auth/google/callback",
+            "body": { "mode": "raw", "raw": "{\n  \"code\": \"<code from Google redirect>\",\n  \"state\": \"<state returned by init>\",\n  \"codeVerifier\": \"<original PKCE verifier>\"\n}" }
+          }
+        },
+        { "name": "Refresh", "request": { "method": "POST", "url": "{{baseUrl}}/auth/refresh" } },
+        { "name": "Logout", "request": { "method": "POST", "url": "{{baseUrl}}/auth/logout" } },
+        { "name": "Get Current User", "request": { "method": "GET", "url": "{{baseUrl}}/auth/me" } }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        { "name": "Get My Profile", "request": { "method": "GET", "url": "{{baseUrl}}/users/me" } },
+        {
+          "name": "Update My Profile",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/users/me",
+            "body": { "mode": "raw", "raw": "{\n  \"city\": \"Meerut\",\n  \"fitnessGoal\": \"muscle_gain\",\n  \"experienceLevel\": \"intermediate\",\n  \"preferredWorkoutTime\": \"evening\",\n  \"location\": { \"lng\": 77.7064, \"lat\": 28.9845 }\n}" }
+          }
+        },
+        { "name": "Block User", "request": { "method": "POST", "url": "{{baseUrl}}/users/:userId/block" } },
+        { "name": "Unblock User", "request": { "method": "DELETE", "url": "{{baseUrl}}/users/:userId/block" } }
+      ]
+    },
+    {
+      "name": "Gyms",
+      "item": [
+        { "name": "List Gyms", "request": { "method": "GET", "url": "{{baseUrl}}/gyms?city=Meerut" } },
+        { "name": "Nearby Gyms", "request": { "method": "GET", "url": "{{baseUrl}}/gyms/nearby?lng=77.70&lat=28.98&radius=5" } }
+      ]
+    },
+    {
+      "name": "Buddies",
+      "item": [
+        { "name": "Recommendations", "request": { "method": "GET", "url": "{{baseUrl}}/buddies/recommendations?radius=10&limit=10" } },
+        { "name": "Send Request", "request": { "method": "POST", "url": "{{baseUrl}}/buddies/requests/:userId" } },
+        { "name": "Accept Request", "request": { "method": "POST", "url": "{{baseUrl}}/buddies/requests/:requestId/accept" } },
+        { "name": "Reject Request", "request": { "method": "POST", "url": "{{baseUrl}}/buddies/requests/:requestId/reject" } }
+      ]
+    },
+    {
+      "name": "Chat",
+      "item": [
+        { "name": "List Conversations", "request": { "method": "GET", "url": "{{baseUrl}}/conversations" } },
+        { "name": "Get Messages", "request": { "method": "GET", "url": "{{baseUrl}}/conversations/:id/messages" } }
+      ]
+    },
+    {
+      "name": "Workouts",
+      "item": [
+        { "name": "Create Workout", "request": { "method": "POST", "url": "{{baseUrl}}/workouts", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"title\": \"Push Day\",\n  \"category\": \"strength\"\n}" } } },
+        { "name": "List Workouts", "request": { "method": "GET", "url": "{{baseUrl}}/workouts" } }
+      ]
+    },
+    {
+      "name": "Check-ins",
+      "item": [
+        { "name": "Check In", "request": { "method": "POST", "url": "{{baseUrl}}/checkins", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"gym\": \"<gymId>\"\n}" } } }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        { "name": "List Reports", "request": { "method": "GET", "url": "{{baseUrl}}/admin/reports" } },
+        { "name": "Suspend User", "request": { "method": "POST", "url": "{{baseUrl}}/admin/users/:userId/suspend" } }
+      ]
+    }
+  ]
+}
