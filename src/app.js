@@ -5,7 +5,7 @@ const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-const mongoSanitize = require('express-mongo-sanitize');
+const mongoSanitize = require('@exortek/express-mongo-sanitize');
 const hpp = require('hpp');
 
 const env = require('./config/env');
