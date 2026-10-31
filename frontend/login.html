@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#090c0a" />
+    <title>Log In | GymBuddy</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="navbar">
+      <a href="index.html" class="logo">Gym<span>Buddy</span></a>
+      <nav>
+        <a class="" href="index.html">Home</a
+        ><a class="" href="buddy.html">Find Buddies</a
+        ><a class="" href="requests.html">Requests</a
+        ><a class="" href="chat.html">Chat</a
+        ><a class="" href="gyms.html">Gyms</a
+        ><a class="" href="workouts.html">Workouts</a>
+      </nav>
+      <a class="btn btn-outline btn-small" href="profile.html">My Profile</a>
+    </header>
+    <main>
+      <div class="container">
+        <section class="form-wrap">
+          <p class="eyebrow">WELCOME BACK</p>
+          <h1>Log in to <span class="accent">GymBuddy.</span></h1>
+          <p class="muted">Pick up where your fitness journey left off.</p>
+          <form data-auth-form>
+            <div class="field">
+              <label for="email">Email address</label
+              ><input
+                id="email"
+                type="email"
+                placeholder="you@example.com"
+                required
+              />
+            </div>
+            <div class="field">
+              <label for="password">Password</label
+              ><input
+                id="password"
+                type="password"
+                placeholder="Enter your password"
+                required
+              />
+            </div>
+            <button class="btn btn-primary" type="submit">Log In</button>
+            <p class="notice" data-message aria-live="polite"></p>
+          </form>
+          <p class="form-note">
+            New to GymBuddy? <a href="signup.html">Create an account</a>
+          </p>
+          <p class="form-note"><a href="index.html">← Back to home</a></p>
+        </section>
+      </div>
+    </main>
+    <footer class="footer">
+      <div class="container footer-inner">
+        <span>© 2026 GymBuddy · Find your fitness community.</span
+        ><span>Move together. Stay consistent.</span>
+      </div>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>

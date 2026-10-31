@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#090c0a" />
+    <title>Create Account | GymBuddy</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="navbar">
+      <a href="index.html" class="logo">Gym<span>Buddy</span></a>
+      <nav>
+        <a class="" href="index.html">Home</a
+        ><a class="" href="buddy.html">Find Buddies</a
+        ><a class="" href="requests.html">Requests</a
+        ><a class="" href="chat.html">Chat</a
+        ><a class="" href="gyms.html">Gyms</a
+        ><a class="" href="workouts.html">Workouts</a>
+      </nav>
+      <a class="btn btn-outline btn-small" href="profile.html">My Profile</a>
+    </header>
+    <main>
+      <div class="container">
+        <section class="form-wrap">
+          <p class="eyebrow">START YOUR JOURNEY</p>
+          <h1>Create your <span class="accent">account.</span></h1>
+          <p class="muted">Find your people and make every workout count.</p>
+          <form data-auth-form>
+            <div class="field">
+              <label for="name">Full name</label
+              ><input id="name" type="text" placeholder="Your name" required />
+            </div>
+            <div class="field">
+              <label for="email">Email address</label
+              ><input
+                id="email"
+                type="email"
+                placeholder="you@example.com"
+                required
+              />
+            </div>
+            <div class="field">
+              <label for="password">Password</label
+              ><input
+                id="password"
+                type="password"
+                minlength="8"
+                placeholder="At least 8 characters"
+                required
+              />
+            </div>
+            <div class="field">
+              <label for="goal">Fitness goal</label
+              ><select id="goal" required>
+                <option value="">Choose a goal</option>
+                <option>Muscle Gain</option>
+                <option>Weight Loss</option>
+                <option>General Fitness</option>
+                <option>Strength Training</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" type="submit">
+              Create Account
+            </button>
+            <p class="notice" data-message aria-live="polite"></p>
+          </form>
+          <p class="form-note">
+            Already have an account? <a href="login.html">Log in</a>
+          </p>
+        </section>
+      </div>
+    </main>
+    <footer class="footer">
+      <div class="container footer-inner">
+        <span>© 2026 GymBuddy · Find your fitness community.</span
+        ><span>Move together. Stay consistent.</span>
+      </div>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>
