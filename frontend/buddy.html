@@ -1,0 +1,159 @@
+<!doctype html>
+<!-- Find Buddies page: displays member cards with search and fitness-goal filtering. -->
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#090c0a" />
+    <title>Find a Buddy | GymBuddy</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Shared navigation: links to the main GymBuddy pages. -->
+    <header class="navbar">
+      <a href="index.html" class="logo">Gym<span>Buddy</span></a>
+      <nav>
+        <a class="" href="dashboard.html">Dashboard</a
+        ><a class="active" href="buddy.html">Find Buddies</a
+        ><a class="" href="requests.html">Requests</a
+        ><a class="" href="chat.html">Chat</a
+        ><a class="" href="gyms.html">Gyms</a
+        ><a class="" href="workouts.html">Workouts</a
+        ><a class="" href="profile.html">Profile</a>
+      </nav>
+      <a class="btn btn-outline btn-small" href="index.html">Log Out</a>
+    </header>
+    <!-- Main page content starts here. -->
+    <main>
+      <div class="container">
+        <section class="page-heading">
+          <p class="eyebrow">YOUR FITNESS COMMUNITY</p>
+          <h1>Find your <span class="accent">buddy.</span></h1>
+          <p class="lead">Connect with people who share your goals.</p>
+        </section>
+        <section class="toolbar">
+          <input
+            type="search"
+            data-search
+            placeholder="Search by name or fitness goal..."
+            aria-label="Search buddies"
+          /><select data-filter aria-label="Filter by fitness goal">
+            <option value="all">All Fitness Goals</option>
+            <option value="muscle gain">Muscle Gain</option>
+            <option value="weight loss">Weight Loss</option>
+            <option value="fitness">General Fitness</option>
+            <option value="strength">Strength Training</option>
+          </select>
+        </section>
+        <div class="section-head">
+          <div>
+            <h2>Explore Buddies</h2>
+            <p>Explore member profiles.</p>
+          </div>
+          <span class="muted" data-count></span>
+        </div>
+        <section class="grid" data-grid>
+          <article
+            class="card"
+            data-card
+            data-goal="muscle gain"
+            data-search="aarav morning strength"
+          >
+            <div class="buddy-top">
+              <div class="avatar">A</div>
+              <div>
+                <h3>Aarav</h3>
+                <p class="muted">Sample member · Morning</p>
+              </div>
+            </div>
+            <span class="tag">FITNESS ENTHUSIAST</span>
+            <div class="tags">
+              <span>Muscle Gain</span><span>Strength</span><span>Morning</span>
+            </div>
+            <p>Strength training · Wants a workout partner.</p>
+            <div class="card-actions">
+              <button
+                class="btn btn-primary"
+                data-demo-action="request"
+                data-name="Aarav"
+              >
+                Send Request</button
+              ><a class="btn btn-outline" href="profile.html">View Profile</a>
+            </div>
+          </article>
+          <article
+            class="card"
+            data-card
+            data-goal="weight loss"
+            data-search="riya evening cardio fitness"
+          >
+            <div class="buddy-top">
+              <div class="avatar">R</div>
+              <div>
+                <h3>Riya</h3>
+                <p class="muted">Sample member · Evening</p>
+              </div>
+            </div>
+            <span class="tag">FITNESS ENTHUSIAST</span>
+            <div class="tags">
+              <span>Weight Loss</span><span>Cardio</span><span>Evening</span>
+            </div>
+            <p>Cardio · Building a healthy routine.</p>
+            <div class="card-actions">
+              <button
+                class="btn btn-primary"
+                data-demo-action="request"
+                data-name="Riya"
+              >
+                Send Request</button
+              ><a class="btn btn-outline" href="profile.html">View Profile</a>
+            </div>
+          </article>
+          <article
+            class="card"
+            data-card
+            data-goal="strength"
+            data-search="kabir strength training morning gym"
+          >
+            <div class="buddy-top">
+              <div class="avatar">K</div>
+              <div>
+                <h3>Kabir</h3>
+                <p class="muted">Sample member · Morning</p>
+              </div>
+            </div>
+            <span class="tag">FITNESS ENTHUSIAST</span>
+            <div class="tags">
+              <span>Strength</span><span>Gym</span><span>Morning</span>
+            </div>
+            <p>Looking for motivation and consistency.</p>
+            <div class="card-actions">
+              <button
+                class="btn btn-primary"
+                data-demo-action="request"
+                data-name="Kabir"
+              >
+                Send Request</button
+              ><a class="btn btn-outline" href="profile.html">View Profile</a>
+            </div>
+          </article>
+        </section>
+        <p class="empty hidden" data-empty>
+          No matching buddies found. Try another search or filter.
+        </p>
+        <p class="notice" data-message aria-live="polite">
+          Sample profiles · Requests are demo-only.
+        </p>
+      </div>
+    </main>
+    <!-- Main page content ends here. -->
+    <footer class="footer">
+      <div class="container footer-inner">
+        <span>© 2026 GymBuddy · Find your fitness community.</span
+        ><span>Move together. Stay consistent.</span>
+      </div>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>

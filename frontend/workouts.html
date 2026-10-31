@@ -1,0 +1,122 @@
+<!doctype html>
+<!-- Workouts page: presents workout ideas with browsing/filter controls. -->
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#090c0a" />
+    <title>Workouts | GymBuddy</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Shared navigation: links to the main GymBuddy pages. -->
+    <header class="navbar">
+      <a href="index.html" class="logo">Gym<span>Buddy</span></a>
+      <nav>
+        <a class="" href="dashboard.html">Dashboard</a
+        ><a class="" href="buddy.html">Find Buddies</a
+        ><a class="" href="requests.html">Requests</a
+        ><a class="" href="chat.html">Chat</a
+        ><a class="" href="gyms.html">Gyms</a
+        ><a class="active" href="workouts.html">Workouts</a
+        ><a class="" href="profile.html">Profile</a>
+      </nav>
+      <a class="btn btn-outline btn-small" href="index.html">Log Out</a>
+    </header>
+    <!-- Main page content starts here. -->
+    <main>
+      <div class="container">
+        <section class="page-heading">
+          <p class="eyebrow">PLAN YOUR NEXT SESSION</p>
+          <h1>Workout <span class="accent">ideas.</span></h1>
+          <p class="lead">Simple workout ideas for your routine.</p>
+        </section>
+        <div class="toolbar">
+          <input
+            data-search
+            placeholder="Search workouts..."
+            aria-label="Search workouts"
+          /><select data-filter>
+            <option value="all">All Workout Types</option>
+            <option value="strength">Strength</option>
+            <option value="cardio">Cardio</option>
+            <option value="mobility">Mobility</option>
+          </select>
+        </div>
+        <section class="grid">
+          <article
+            class="card"
+            data-card
+            data-goal="strength"
+            data-search="full body strength beginner dumbbell"
+          >
+            <div class="icon-box">✦</div>
+            <span class="tag">STRENGTH · BEGINNER</span>
+            <h3 style="margin-top: 15px">Full Body Basics</h3>
+            <p>A balanced full-body session.</p>
+            <ul class="checklist">
+              <li>Warm-up: 5–10 minutes</li>
+              <li>Squat pattern</li>
+              <li>Push and pull movements</li>
+              <li>Cool down</li>
+            </ul>
+            <button class="btn btn-primary" data-demo-action="save workout">
+              Save Workout
+            </button>
+          </article>
+          <article
+            class="card"
+            data-card
+            data-goal="cardio"
+            data-search="cardio steady pace walking cycling"
+          >
+            <div class="icon-box">↗</div>
+            <span class="tag">CARDIO · FLEXIBLE</span>
+            <h3 style="margin-top: 15px">Steady Cardio</h3>
+            <p>A steady-paced cardio session.</p>
+            <ul class="checklist">
+              <li>Warm-up: 5 minutes</li>
+              <li>Comfortable steady pace</li>
+              <li>Cool down: 5 minutes</li>
+            </ul>
+            <button class="btn btn-primary" data-demo-action="save workout">
+              Save Workout
+            </button>
+          </article>
+          <article
+            class="card"
+            data-card
+            data-goal="mobility"
+            data-search="mobility recovery stretch flexibility"
+          >
+            <div class="icon-box">◎</div>
+            <span class="tag">MOBILITY · RECOVERY</span>
+            <h3 style="margin-top: 15px">Mobility Reset</h3>
+            <p>Light mobility and recovery.</p>
+            <ul class="checklist">
+              <li>Easy movement warm-up</li>
+              <li>Comfortable mobility drills</li>
+              <li>Relaxed breathing</li>
+            </ul>
+            <button class="btn btn-primary" data-demo-action="save workout">
+              Save Workout
+            </button>
+          </article>
+        </section>
+        <p class="empty hidden" data-empty>No matching workouts found.</p>
+        <p class="notice" data-message>
+          General workout examples. Choose activities suited to your ability.
+        </p>
+      </div>
+    </main>
+    <!-- Main page content ends here. -->
+    <footer class="footer">
+      <div class="container footer-inner">
+        <span>© 2026 GymBuddy · Find your fitness community.</span
+        ><span>Move together. Stay consistent.</span>
+      </div>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>

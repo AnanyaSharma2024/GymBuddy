@@ -1,0 +1,82 @@
+<!doctype html>
+<!-- Dashboard page: central starting point for the signed-in user experience. -->
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#090c0a" />
+    <title>Dashboard | GymBuddy</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Shared navigation: links to the main GymBuddy pages. -->
+    <header class="navbar">
+      <a href="index.html" class="logo">Gym<span>Buddy</span></a>
+      <nav>
+        <a class="active" href="dashboard.html">Dashboard</a
+        ><a class="" href="buddy.html">Find Buddies</a
+        ><a class="" href="requests.html">Requests</a
+        ><a class="" href="chat.html">Chat</a
+        ><a class="" href="gyms.html">Gyms</a
+        ><a class="" href="workouts.html">Workouts</a
+        ><a class="" href="profile.html">Profile</a>
+      </nav>
+      <a class="btn btn-outline btn-small" href="index.html">Log Out</a>
+    </header>
+    <!-- Main page content starts here. -->
+    <main>
+      <div class="container">
+        <section class="page-heading">
+          <p class="eyebrow">YOUR GYMBUDDY SPACE</p>
+          <h1>Your <span class="accent">dashboard.</span></h1>
+          <p class="lead">Your fitness tools, all in one place.</p>
+        </section>
+        <section class="section" style="padding-top: 18px">
+          <div class="grid">
+            <a class="card" href="profile.html"
+              ><div class="icon-box">◎</div>
+              <h3>My Profile</h3>
+              <p>Manage your fitness details.</p>
+              <span class="tag">OPEN PROFILE ↗</span></a
+            ><a class="card" href="buddy.html"
+              ><div class="icon-box">⌕</div>
+              <h3>Find Buddies</h3>
+              <p>Find your workout partner.</p>
+              <span class="tag">EXPLORE MEMBERS ↗</span></a
+            ><a class="card" href="requests.html"
+              ><div class="icon-box">↔</div>
+              <h3>Buddy Requests</h3>
+              <p>Manage buddy requests.</p>
+              <span class="tag">VIEW REQUESTS ↗</span></a
+            ><a class="card" href="chat.html"
+              ><div class="icon-box">✉</div>
+              <h3>Chat</h3>
+              <p>Chat with your buddies.</p>
+              <span class="tag">OPEN CHAT ↗</span></a
+            ><a class="card" href="gyms.html"
+              ><div class="icon-box">⌂</div>
+              <h3>Explore Gyms</h3>
+              <p>Explore nearby gym options.</p>
+              <span class="tag">FIND A GYM ↗</span></a
+            ><a class="card" href="workouts.html"
+              ><div class="icon-box">✦</div>
+              <h3>Workouts</h3>
+              <p>Browse workout ideas.</p>
+              <span class="tag">VIEW WORKOUTS ↗</span></a
+            >
+          </div>
+          <p class="notice">Demo preview · Backend not connected.</p>
+        </section>
+      </div>
+    </main>
+    <!-- Main page content ends here. -->
+    <footer class="footer">
+      <div class="container footer-inner">
+        <span>© 2026 GymBuddy · Find your fitness community.</span
+        ><span>Move together. Stay consistent.</span>
+      </div>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,102 @@
+<!doctype html>
+<!-- Profile page: shows the user profile and profile-related information. -->
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#090c0a" />
+    <title>My Profile | GymBuddy</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Shared navigation: links to the main GymBuddy pages. -->
+    <header class="navbar">
+      <a href="index.html" class="logo">Gym<span>Buddy</span></a>
+      <nav>
+        <a class="" href="dashboard.html">Dashboard</a
+        ><a class="" href="buddy.html">Find Buddies</a
+        ><a class="" href="requests.html">Requests</a
+        ><a class="" href="chat.html">Chat</a
+        ><a class="" href="gyms.html">Gyms</a
+        ><a class="" href="workouts.html">Workouts</a
+        ><a class="active" href="profile.html">Profile</a>
+      </nav>
+      <a class="btn btn-outline btn-small" href="index.html">Log Out</a>
+    </header>
+    <!-- Main page content starts here. -->
+    <main>
+      <div class="container">
+        <section class="page-heading">
+          <p class="eyebrow">YOUR SPACE</p>
+          <h1>My <span class="accent">profile.</span></h1>
+          <p class="lead">Your fitness details.</p>
+        </section>
+        <div class="profile-layout section" style="padding-top: 20px">
+          <aside class="card profile-summary">
+            <div class="avatar">Y</div>
+            <h2>Your Name</h2>
+            <p class="muted">GymBuddy member</p>
+            <span class="tag">PROFILE PREVIEW</span>
+            <ul class="checklist">
+              <li>Fitness goals</li>
+              <li>Preferred training time</li>
+              <li>Gym preferences</li>
+            </ul>
+          </aside>
+          <section class="card">
+            <h2>Edit profile</h2>
+            <p class="muted">Demo profile · Changes are not saved.</p>
+            <form data-demo-form>
+              <div class="field">
+                <label for="name">Display name</label
+                ><input id="name" placeholder="Enter your name" />
+              </div>
+              <div class="field">
+                <label for="goal">Fitness goal</label
+                ><select id="goal">
+                  <option>General Fitness</option>
+                  <option>Muscle Gain</option>
+                  <option>Weight Loss</option>
+                  <option>Strength Training</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="time">Preferred workout time</label
+                ><select id="time">
+                  <option>Morning</option>
+                  <option>Afternoon</option>
+                  <option>Evening</option>
+                  <option>Flexible</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="gym">Gym or area (optional)</label
+                ><input id="gym" placeholder="Your preferred gym or area" />
+              </div>
+              <div class="field">
+                <label for="bio">About you</label
+                ><textarea
+                  id="bio"
+                  placeholder="Share your fitness interests..."
+                ></textarea>
+              </div>
+              <button class="btn btn-primary" type="submit">
+                Save Preview
+              </button>
+              <p class="notice" data-message aria-live="polite"></p>
+            </form>
+          </section>
+        </div>
+      </div>
+    </main>
+    <!-- Main page content ends here. -->
+    <footer class="footer">
+      <div class="container footer-inner">
+        <span>© 2026 GymBuddy · Find your fitness community.</span
+        ><span>Move together. Stay consistent.</span>
+      </div>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,113 @@
+<!doctype html>
+<!-- Gyms page: presents gym listings and related search/filter controls. -->
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#090c0a" />
+    <title>Explore Gyms | GymBuddy</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Shared navigation: links to the main GymBuddy pages. -->
+    <header class="navbar">
+      <a href="index.html" class="logo">Gym<span>Buddy</span></a>
+      <nav>
+        <a class="" href="dashboard.html">Dashboard</a
+        ><a class="" href="buddy.html">Find Buddies</a
+        ><a class="" href="requests.html">Requests</a
+        ><a class="" href="chat.html">Chat</a
+        ><a class="active" href="gyms.html">Gyms</a
+        ><a class="" href="workouts.html">Workouts</a
+        ><a class="" href="profile.html">Profile</a>
+      </nav>
+      <a class="btn btn-outline btn-small" href="index.html">Log Out</a>
+    </header>
+    <!-- Main page content starts here. -->
+    <main>
+      <div class="container">
+        <section class="page-heading">
+          <p class="eyebrow">FIND YOUR TRAINING SPACE</p>
+          <h1>Explore <span class="accent">gyms.</span></h1>
+          <p class="lead">Find your training space.</p>
+        </section>
+        <div class="toolbar">
+          <input
+            data-search
+            placeholder="Search gym type or facility..."
+            aria-label="Search gyms"
+          /><select data-filter>
+            <option value="all">All Gym Types</option>
+            <option value="strength">Strength Training</option>
+            <option value="cardio">Cardio</option>
+            <option value="group">Group Fitness</option>
+          </select>
+        </div>
+        <section class="grid">
+          <article
+            class="card"
+            data-card
+            data-goal="strength"
+            data-search="iron district strength free weights"
+          >
+            <div class="icon-box">🏋</div>
+            <span class="tag">STRENGTH</span>
+            <h3 style="margin-top: 15px">Iron District</h3>
+            <p>Weights and strength training.</p>
+            <div class="tags">
+              <span>Free weights</span><span>Strength</span>
+            </div>
+            <button class="btn btn-outline" data-demo-action="gym details">
+              View Details
+            </button>
+          </article>
+          <article
+            class="card"
+            data-card
+            data-goal="cardio"
+            data-search="pulse studio cardio machines treadmill"
+          >
+            <div class="icon-box">⚡</div>
+            <span class="tag">CARDIO</span>
+            <h3 style="margin-top: 15px">Pulse Studio</h3>
+            <p>Cardio and endurance training.</p>
+            <div class="tags"><span>Treadmills</span><span>Cardio</span></div>
+            <button class="btn btn-outline" data-demo-action="gym details">
+              View Details
+            </button>
+          </article>
+          <article
+            class="card"
+            data-card
+            data-goal="group"
+            data-search="community fit group classes mobility"
+          >
+            <div class="icon-box">◎</div>
+            <span class="tag">GROUP FITNESS</span>
+            <h3 style="margin-top: 15px">Community Fit</h3>
+            <p>Group fitness and mobility.</p>
+            <div class="tags">
+              <span>Group classes</span><span>Mobility</span>
+            </div>
+            <button class="btn btn-outline" data-demo-action="gym details">
+              View Details
+            </button>
+          </article>
+        </section>
+        <p class="empty hidden" data-empty>No matching gyms found.</p>
+        <p class="notice" data-message>
+          Illustrative gym listings · Not verified.
+        </p>
+      </div>
+    </main>
+    <!-- Main page content ends here. -->
+    <footer class="footer">
+      <div class="container footer-inner">
+        <span>© 2026 GymBuddy · Find your fitness community.</span
+        ><span>Move together. Stay consistent.</span>
+      </div>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>
