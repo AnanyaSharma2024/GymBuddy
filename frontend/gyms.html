@@ -1,113 +1,195 @@
-<!doctype html>
-<!-- Gyms page: presents gym listings and related search/filter controls. -->
 
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#090c0a" />
-    <title>Explore Gyms | GymBuddy</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <!-- Shared navigation: links to the main GymBuddy pages. -->
-    <header class="navbar">
-      <a href="index.html" class="logo">Gym<span>Buddy</span></a>
-      <nav>
-        <a class="" href="dashboard.html">Dashboard</a
-        ><a class="" href="buddy.html">Find Buddies</a
-        ><a class="" href="requests.html">Requests</a
-        ><a class="" href="chat.html">Chat</a
-        ><a class="active" href="gyms.html">Gyms</a
-        ><a class="" href="workouts.html">Workouts</a
-        ><a class="" href="profile.html">Profile</a>
-      </nav>
-      <a class="btn btn-outline btn-small" href="index.html">Log Out</a>
-    </header>
-    <!-- Main page content starts here. -->
-    <main>
-      <div class="container">
-        <section class="page-heading">
-          <p class="eyebrow">FIND YOUR TRAINING SPACE</p>
-          <h1>Explore <span class="accent">gyms.</span></h1>
-          <p class="lead">Find your training space.</p>
-        </section>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#090c0a" />
+  <title>Explore Gyms | GymBuddy</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="auth-guard.js"></script>
+</head>
+
+<body>
+  <header class="navbar">
+    <a href="index.html" class="logo">Gym<span>Buddy</span></a>
+
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="buddy.html">Find Buddies</a>
+      <a href="requests.html">Requests</a>
+      <a href="chat.html">Chat</a>
+      <a class="active" href="gyms.html">Gyms</a>
+      <a href="workouts.html">Workouts</a>
+      <a href="profile.html">Profile</a>
+    </nav>
+
+    <a class="btn btn-outline btn-small" href="index.html">Log Out</a>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <section class="page-heading">
+        <p class="eyebrow">FIND YOUR TRAINING SPACE</p>
+        <h1>Explore <span class="accent">gyms.</span></h1>
+        <p class="lead">
+          Discover gyms around you or add your own gym to GymBuddy.
+        </p>
+      </section>
+
+      <!-- EXPLORE GYMS -->
+      <section class="section">
+        <div class="section-heading">
+          <div>
+            <h2>Explore Gyms</h2>
+            <p class="muted">Find a gym that matches your fitness goals.</p>
+          </div>
+        </div>
+
         <div class="toolbar">
           <input
-            data-search
-            placeholder="Search gym type or facility..."
+            id="gym-search"
+            type="search"
+            placeholder="Search gym name or city..."
             aria-label="Search gyms"
-          /><select data-filter>
-            <option value="all">All Gym Types</option>
-            <option value="strength">Strength Training</option>
-            <option value="cardio">Cardio</option>
-            <option value="group">Group Fitness</option>
-          </select>
+          />
+
+          <input
+            id="gym-city-filter"
+            type="text"
+            placeholder="Filter by city..."
+            aria-label="Filter by city"
+          />
         </div>
-        <section class="grid">
-          <article
-            class="card"
-            data-card
-            data-goal="strength"
-            data-search="iron district strength free weights"
-          >
-            <div class="icon-box">🏋</div>
-            <span class="tag">STRENGTH</span>
-            <h3 style="margin-top: 15px">Iron District</h3>
-            <p>Weights and strength training.</p>
-            <div class="tags">
-              <span>Free weights</span><span>Strength</span>
-            </div>
-            <button class="btn btn-outline" data-demo-action="gym details">
-              View Details
-            </button>
-          </article>
-          <article
-            class="card"
-            data-card
-            data-goal="cardio"
-            data-search="pulse studio cardio machines treadmill"
-          >
-            <div class="icon-box">⚡</div>
-            <span class="tag">CARDIO</span>
-            <h3 style="margin-top: 15px">Pulse Studio</h3>
-            <p>Cardio and endurance training.</p>
-            <div class="tags"><span>Treadmills</span><span>Cardio</span></div>
-            <button class="btn btn-outline" data-demo-action="gym details">
-              View Details
-            </button>
-          </article>
-          <article
-            class="card"
-            data-card
-            data-goal="group"
-            data-search="community fit group classes mobility"
-          >
-            <div class="icon-box">◎</div>
-            <span class="tag">GROUP FITNESS</span>
-            <h3 style="margin-top: 15px">Community Fit</h3>
-            <p>Group fitness and mobility.</p>
-            <div class="tags">
-              <span>Group classes</span><span>Mobility</span>
-            </div>
-            <button class="btn btn-outline" data-demo-action="gym details">
-              View Details
-            </button>
-          </article>
+
+        <p id="gym-count" class="muted">Loading gyms...</p>
+
+        <section id="gym-list" class="grid">
+          <!-- Gym cards will be loaded from the backend -->
         </section>
-        <p class="empty hidden" data-empty>No matching gyms found.</p>
-        <p class="notice" data-message>
-          Illustrative gym listings · Not verified.
+
+        <p id="gym-empty" class="empty hidden">
+          No gyms found. You can add one below.
         </p>
-      </div>
-    </main>
-    <!-- Main page content ends here. -->
-    <footer class="footer">
-      <div class="container footer-inner">
-        <span>© 2026 GymBuddy · Find your fitness community.</span
-        ><span>Move together. Stay consistent.</span>
-      </div>
-    </footer>
-    <script src="script.js"></script>
-  </body>
+
+        <p id="gym-list-message" class="notice" aria-live="polite"></p>
+      </section>
+
+      <!-- ADD A GYM -->
+      <section class="section" id="add-gym-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">GROW THE GYMBUDDY COMMUNITY</p>
+            <h2>Add a Gym</h2>
+            <p class="muted">
+              Can't find your gym? Add its details so other members can discover it.
+            </p>
+          </div>
+        </div>
+
+        <form id="add-gym-form" class="card">
+          <div class="form-group">
+            <label for="gym-name">Gym Name</label>
+            <input
+              id="gym-name"
+              name="name"
+              type="text"
+              maxlength="120"
+              placeholder="e.g. Fitness First"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="gym-address">Full Address</label>
+            <input
+              id="gym-address"
+              name="address"
+              type="text"
+              maxlength="250"
+              placeholder="Enter gym's full address"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="gym-city">City</label>
+            <input
+              id="gym-city"
+              name="city"
+              type="text"
+              maxlength="100"
+              placeholder="e.g. Mathura"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Gym Location</label>
+            <p class="muted">
+              Enter the gym's coordinates or use your current location
+              if you are physically at the gym.
+            </p>
+
+            <button
+              type="button"
+              id="use-gym-location"
+              class="btn btn-outline"
+            >
+              Use My Current Location
+            </button>
+          </div>
+
+          <div class="grid">
+            <div class="form-group">
+              <label for="gym-latitude">Latitude</label>
+              <input
+                id="gym-latitude"
+                name="latitude"
+                type="number"
+                step="any"
+                min="-90"
+                max="90"
+                placeholder="e.g. 27.4924"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="gym-longitude">Longitude</label>
+              <input
+                id="gym-longitude"
+                name="longitude"
+                type="number"
+                step="any"
+                min="-180"
+                max="180"
+                placeholder="e.g. 77.6737"
+                required
+              />
+            </div>
+          </div>
+
+          <p id="gym-form-message" class="notice" aria-live="polite"></p>
+
+          <button
+            type="submit"
+            id="add-gym-submit"
+            class="btn btn-primary"
+          >
+            Add Gym
+          </button>
+        </form>
+      </section>
+
+    </div>
+  </main>
+
+  <footer>
+    © 2026 GymBuddy. Built for better workouts and stronger connections.
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="gyms.js"></script>
+</body>
 </html>

@@ -18,5 +18,6 @@ router.post('/refresh', refreshLimiter, validate({ body: refreshSchema }), contr
 router.post('/logout', controller.logout);
 router.post('/logout-all', requireAuth, controller.logoutAll);
 router.get('/me', requireAuth, controller.me);
+router.get('/google/callback', controller.googleRedirect);
 
 module.exports = router;

@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const User = require('../../models/User');
 const BuddyRequest = require('../../models/BuddyRequest');
 const ApiError = require('../../utils/apiError');
@@ -18,18 +19,54 @@ async function getRecommendations(userId, { radiusKm = DEFAULT_RADIUS_KM, limit 
   // either (handled on their side) - but I must also exclude anyone I've
   // blocked, and anyone who has blocked me, from MY recommendations.
   const blockedByOthers = await User.find({ blockedUsers: me._id }).select('_id').lean();
+  const acceptedRequests = await BuddyRequest.find({
+  status: 'accepted',
+  $or: [
+    { sender: me._id },
+    { recipient: me._id },
+  ],
+}).select('sender recipient').lean();
+
+const connectedUserIds = acceptedRequests.map((request) => {
+  return request.sender.toString() === me._id.toString()
+    ? request.recipient.toString()
+    : request.sender.toString();
+});
   const excludedIds = new Set([
     me._id.toString(),
     ...(me.blockedUsers || []).map((id) => id.toString()),
     ...blockedByOthers.map((u) => u._id.toString()),
+    ...connectedUserIds,
   ]);
 
   const baseQuery = {
-    _id: { $nin: Array.from(excludedIds) },
-    accountStatus: 'active',
-    'privacy.allowBuddyRequests': { $ne: false },
-    'privacy.showProfile': { $ne: false },
-  };
+  _id: mongoose.trusted({
+    $nin: Array.from(excludedIds),
+  }),
+  accountStatus: 'active',
+  $and: [
+    {
+      $or: [
+        { 'privacy.allowBuddyRequests': true },
+        {
+          'privacy.allowBuddyRequests': mongoose.trusted({
+            $exists: false,
+          }),
+        },
+      ],
+    },
+    {
+      $or: [
+        { 'privacy.showProfile': true },
+        {
+          'privacy.showProfile': mongoose.trusted({
+            $exists: false,
+          }),
+        },
+      ],
+    },
+  ],
+};
 
   let candidates;
   if (me.location?.coordinates && isValidCoordinates(me.location.coordinates)) {
@@ -101,7 +138,7 @@ async function sendRequest(senderId, recipientId) {
   const existing = await BuddyRequest.findOne({
     sender: senderId,
     recipient: recipientId,
-    status: { $in: ['pending', 'accepted'] },
+    status: mongoose.trusted({ $in: ['pending', 'accepted'] }),
   });
   if (existing) throw ApiError.conflict('A request already exists between you and this user');
 
@@ -205,6 +242,38 @@ async function listMyRequests(userId, { direction = 'incoming', status, page = 1
   return { requests, total, page, limit };
 }
 
+async function listMyConnections(userId) {
+  const connections = await BuddyRequest.find({
+    status: 'accepted',
+    $or: [
+      { sender: userId },
+      { recipient: userId },
+    ],
+  })
+    .populate('sender', 'name profileImage city gym fitnessGoal experienceLevel privacy')
+    .populate('recipient', 'name profileImage city gym fitnessGoal experienceLevel privacy')
+    .sort({ respondedAt: -1 });
+
+  return connections.map((connection) => {
+    const buddy =
+      connection.sender._id.toString() === userId
+        ? connection.recipient
+        : connection.sender;
+
+    return {
+      connectionId: connection._id,
+      user: buddy.toPublicJSON(),
+      connectedAt: connection.respondedAt,
+    };
+  });
+}
+
 module.exports = {
-  getRecommendations, sendRequest, respondToRequest, cancelRequest, unmatch, listMyRequests,
+  getRecommendations,
+  sendRequest,
+  respondToRequest,
+  cancelRequest,
+  unmatch,
+  listMyRequests,
+  listMyConnections,
 };

@@ -1,6 +1,7 @@
 // ============================================================================
 // EXPRESS APP ASSEMBLY
 // ============================================================================
+const path = require('path');
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
@@ -31,8 +32,21 @@ const app = express();
 app.set('trust proxy', 1);
 
 // --- Security headers ---
-app.use(helmet());
-
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+        "img-src": [
+          "'self'",
+          "data:",
+          "blob:",
+          "https://res.cloudinary.com",
+        ],
+      },
+    },
+  })
+);
 // --- CORS: only the configured frontend origin, with credentials enabled
 // (required for HttpOnly cookies to be sent cross-origin). ---
 app.use(cors({
@@ -63,6 +77,8 @@ app.use((req, res, next) => {
   logger.debug(`${req.method} ${req.originalUrl}`);
   next();
 });
+// Serve frontend files
+app.use(express.static(path.join(__dirname, '../frontend')));
 
 app.get('/health', (req, res) => res.status(200).json({ status: 'ok', uptime: process.uptime() }));
 

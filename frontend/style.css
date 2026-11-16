@@ -798,3 +798,118 @@ h2 {
     padding: 22px;
   }
 }
+
+/* Unread message count badge */
+.unread-badge {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  margin-top: 6px;
+  border-radius: 50px;
+  background: #22c55e;
+  color: #07110a;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.profile-summary [data-profile-avatar] {
+  display: none !important;
+}
+
+
+/* ================================
+   GYM DIRECTORY
+================================ */
+
+#gym-list .card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+#gym-list .card h3 {
+  margin: 8px 0 0;
+}
+
+#gym-list .card p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+#gym-list .card .tag {
+  margin-bottom: 4px;
+}
+
+#gym-list .card button {
+  width: 100%;
+  margin-top: 5px;
+}
+
+#gym-list .card button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+#gym-list .card div[hidden] {
+  display: none;
+}
+
+#gym-list .card div:not([hidden]) {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #c7d0c8;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+#add-gym-form {
+  max-width: 760px;
+  margin-top: 22px;
+}
+
+#add-gym-form .form-group {
+  margin-bottom: 20px;
+}
+
+#add-gym-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+#add-gym-form input {
+  width: 100%;
+  padding: 13px 14px;
+  border-radius: 10px;
+}
+
+#add-gym-form .grid {
+  margin-bottom: 16px;
+}
+
+#add-gym-form .notice {
+  margin: 14px 0;
+}
+
+#use-gym-location {
+  margin-top: 10px;
+}
+
+#gym-count {
+  margin: 16px 0;
+}
+
+#gym-empty {
+  text-align: center;
+  padding: 24px;
+}
+/* Keep protected pages hidden until authentication is verified. */
+html.auth-pending body {
+  visibility: hidden;
+}

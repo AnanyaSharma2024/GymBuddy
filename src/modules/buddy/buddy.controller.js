@@ -49,6 +49,22 @@ const listRequests = asyncHandler(async (req, res) => {
   });
 });
 
+const listConnections = asyncHandler(async (req, res) => {
+  const connections = await buddyService.listMyConnections(req.user.id);
+
+  return success(res, {
+    data: connections,
+  });
+});
+
 module.exports = {
-  recommendations, nearby, sendRequest, acceptRequest, rejectRequest, cancelRequest, unmatch, listRequests,
+  recommendations,
+  nearby,
+  sendRequest,
+  acceptRequest,
+  rejectRequest,
+  cancelRequest,
+  unmatch,
+  listRequests,
+  listConnections,
 };

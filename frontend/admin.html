@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#090c0a" />
+    <title>Admin Dashboard | GymBuddy</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="auth-guard.js"></script>
+  </head>
+
+  <body>
+    <header class="navbar">
+      <a href="index.html" class="logo">Gym<span>Buddy</span></a>
+
+      <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="buddy.html">Find Buddies</a>
+        <a href="requests.html">Requests</a>
+        <a href="chat.html">Chat</a>
+        <a href="gyms.html">Gyms</a>
+        <a href="workouts.html">Workouts</a>
+        <a href="profile.html">Profile</a>
+        <a class="active" href="admin.html">Admin</a>
+      </nav>
+
+      <button class="btn btn-outline btn-small" type="button" data-logout>
+        Log Out
+      </button>
+    </header>
+
+    <main>
+      <div class="container">
+        <section class="page-heading">
+          <p class="eyebrow">GYMBUDDY MANAGEMENT</p>
+          <h1>Admin <span class="accent">dashboard.</span></h1>
+          <p class="lead">
+            Review gym submissions and manage community safety.
+          </p>
+        </section>
+
+        <section class="section">
+          <div class="grid">
+            <div class="card">
+              <p class="eyebrow">PENDING GYMS</p>
+              <h2 id="pending-gym-count">—</h2>
+              <p class="muted">Waiting for verification</p>
+            </div>
+
+            <div class="card">
+              <p class="eyebrow">USER REPORTS</p>
+              <h2 id="pending-report-count">Coming soon</h2>
+              <p class="muted">Reports awaiting review</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">GYM MANAGEMENT</p>
+              <h2>Pending gym approvals</h2>
+              <p class="muted">
+                Review submitted gyms before marking them verified.
+              </p>
+            </div>
+
+            <button
+              class="btn btn-outline"
+              type="button"
+              id="refresh-gyms"
+            >
+              Refresh
+            </button>
+          </div>
+
+          <p class="notice" id="admin-gym-message" aria-live="polite"></p>
+
+          <div class="grid" id="admin-gym-list"></div>
+
+          <div class="card hidden" id="admin-gym-empty">
+            <h3>No pending gyms</h3>
+            <p class="muted">
+              All submitted gyms have been reviewed.
+            </p>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="card">
+            <p class="eyebrow">COMMUNITY SAFETY</p>
+            <h2>User reports</h2>
+            <p class="muted">
+              User reporting and moderation tools will appear here once
+              the report system is connected.
+            </p>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-inner">
+        <span>© 2026 GymBuddy · Admin Panel</span>
+        <span>Move together. Stay consistent.</span>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="admin.js"></script>
+  </body>
+</html>

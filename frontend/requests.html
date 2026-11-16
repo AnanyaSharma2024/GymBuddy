@@ -1,6 +1,5 @@
-<!doctype html>
-<!-- Buddy Requests page: lets users view and manage demo request tabs. -->
 
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -8,108 +7,93 @@
     <meta name="theme-color" content="#090c0a" />
     <title>Buddy Requests | GymBuddy</title>
     <link rel="stylesheet" href="style.css" />
+    <script src="auth-guard.js"></script>
   </head>
+
   <body>
-    <!-- Shared navigation: links to the main GymBuddy pages. -->
     <header class="navbar">
       <a href="index.html" class="logo">Gym<span>Buddy</span></a>
+
       <nav>
-        <a class="" href="dashboard.html">Dashboard</a
-        ><a class="" href="buddy.html">Find Buddies</a
-        ><a class="active" href="requests.html">Requests</a
-        ><a class="" href="chat.html">Chat</a
-        ><a class="" href="gyms.html">Gyms</a
-        ><a class="" href="workouts.html">Workouts</a
-        ><a class="" href="profile.html">Profile</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="buddy.html">Find Buddies</a>
+        <a class="active" href="requests.html">Requests</a>
+        <a href="chat.html">Chat</a>
+        <a href="gyms.html">Gyms</a>
+        <a href="workouts.html">Workouts</a>
+        <a href="profile.html">Profile</a>
       </nav>
-      <a class="btn btn-outline btn-small" href="index.html">Log Out</a>
+
+      <button class="btn btn-outline btn-small" type="button" data-logout>
+        Log Out
+      </button>
     </header>
-    <!-- Main page content starts here. -->
+
     <main>
       <div class="container">
         <section class="page-heading">
           <p class="eyebrow">BUILD YOUR CIRCLE</p>
           <h1>Buddy <span class="accent">requests.</span></h1>
-          <p class="lead">Manage your buddy invitations.</p>
+          <p class="lead">Manage your buddy invitations and connections.</p>
         </section>
+
         <div data-tabs>
           <div class="tabs">
-            <button class="tab active" data-tab="received">Received</button
-            ><button class="tab" data-tab="sent">Sent</button>
+            <button class="tab active" type="button" data-tab="received">
+              Received
+            </button>
+
+            <button class="tab" type="button" data-tab="sent">
+              Sent
+            </button>
+
+            <button class="tab" type="button" data-tab="connected">
+              Connected Buddies
+            </button>
           </div>
-          <section data-tab-panel="received" class="grid two">
-            <article class="card request-row">
-              <div class="avatar">M</div>
-              <div class="grow">
-                <h3>Meera</h3>
-                <p>Interested in general fitness · Evening</p>
-                <span class="tag">SAMPLE REQUEST</span>
-              </div>
-              <div class="card-actions">
-                <button
-                  class="btn btn-primary btn-small"
-                  data-demo-action="accept request"
-                >
-                  Accept</button
-                ><button
-                  class="btn btn-outline btn-small"
-                  data-demo-action="decline request"
-                >
-                  Decline
-                </button>
-              </div>
-            </article>
-            <article class="card request-row">
-              <div class="avatar">A</div>
-              <div class="grow">
-                <h3>Arjun</h3>
-                <p>Strength training · Morning</p>
-                <span class="tag">SAMPLE REQUEST</span>
-              </div>
-              <div class="card-actions">
-                <button
-                  class="btn btn-primary btn-small"
-                  data-demo-action="accept request"
-                >
-                  Accept</button
-                ><button
-                  class="btn btn-outline btn-small"
-                  data-demo-action="decline request"
-                >
-                  Decline
-                </button>
-              </div>
-            </article>
+
+          <!-- Received Requests -->
+          <section data-tab-panel="received">
+            <div class="grid two" id="received-requests"></div>
+
+            <p class="empty hidden" id="received-empty">
+              No incoming buddy requests yet.
+            </p>
           </section>
-          <section data-tab-panel="sent" class="grid two hidden">
-            <article class="card request-row">
-              <div class="avatar">R</div>
-              <div class="grow">
-                <h3>Riya</h3>
-                <p>Cardio · Evening</p>
-                <span class="tag">PENDING PREVIEW</span>
-              </div>
-              <button
-                class="btn btn-outline btn-small"
-                data-demo-action="cancel request"
-              >
-                Cancel request
-              </button>
-            </article>
+
+          <!-- Sent Requests -->
+          <section data-tab-panel="sent" class="hidden">
+            <div class="grid two" id="sent-requests"></div>
+
+            <p class="empty hidden" id="sent-empty">
+              You haven't sent any buddy requests yet.
+            </p>
+          </section>
+
+          <!-- Connected Buddies -->
+          <section data-tab-panel="connected" class="hidden">
+            <div class="grid two" id="connected-buddies"></div>
+
+            <p class="empty hidden" id="connected-empty">
+              No connected buddies yet. Accept a buddy request to connect!
+            </p>
           </section>
         </div>
-        <p class="notice" data-message aria-live="polite">
-          Sample requests · Actions are demo-only.
+
+        <p class="notice" id="request-message" aria-live="polite">
+          Loading your buddy requests...
         </p>
       </div>
     </main>
-    <!-- Main page content ends here. -->
+
     <footer class="footer">
       <div class="container footer-inner">
-        <span>© 2026 GymBuddy · Find your fitness community.</span
-        ><span>Move together. Stay consistent.</span>
+        <span>© 2026 GymBuddy · Find your fitness community.</span>
+        <span>Move together. Stay consistent.</span>
       </div>
     </footer>
+
     <script src="script.js"></script>
+    <script src="requests.js"></script>
   </body>
 </html>

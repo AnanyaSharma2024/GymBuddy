@@ -1,6 +1,5 @@
-<!doctype html>
-<!-- Profile page: shows the user profile and profile-related information. -->
 
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -8,95 +7,186 @@
     <meta name="theme-color" content="#090c0a" />
     <title>My Profile | GymBuddy</title>
     <link rel="stylesheet" href="style.css" />
+    <script src="auth-guard.js"></script>
   </head>
+
   <body>
-    <!-- Shared navigation: links to the main GymBuddy pages. -->
     <header class="navbar">
       <a href="index.html" class="logo">Gym<span>Buddy</span></a>
+
       <nav>
-        <a class="" href="dashboard.html">Dashboard</a
-        ><a class="" href="buddy.html">Find Buddies</a
-        ><a class="" href="requests.html">Requests</a
-        ><a class="" href="chat.html">Chat</a
-        ><a class="" href="gyms.html">Gyms</a
-        ><a class="" href="workouts.html">Workouts</a
-        ><a class="active" href="profile.html">Profile</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="buddy.html">Find Buddies</a>
+        <a href="requests.html">Requests</a>
+        <a href="chat.html">Chat</a>
+        <a href="gyms.html">Gyms</a>
+        <a href="workouts.html">Workouts</a>
+        <a class="active" href="profile.html">Profile</a>
       </nav>
-      <a class="btn btn-outline btn-small" href="index.html">Log Out</a>
+
+      <button class="btn btn-outline btn-small" type="button" data-logout>
+        Log Out
+      </button>
     </header>
-    <!-- Main page content starts here. -->
+
     <main>
       <div class="container">
         <section class="page-heading">
           <p class="eyebrow">YOUR SPACE</p>
           <h1>My <span class="accent">profile.</span></h1>
-          <p class="lead">Your fitness details.</p>
+          <p class="lead">Manage your personal fitness details.</p>
         </section>
+
         <div class="profile-layout section" style="padding-top: 20px">
+
+          <!-- Profile summary -->
           <aside class="card profile-summary">
-            <div class="avatar">Y</div>
-            <h2>Your Name</h2>
-            <p class="muted">GymBuddy member</p>
-            <span class="tag">PROFILE PREVIEW</span>
+            <img
+              data-profile-image
+              alt="Profile picture"
+              hidden
+              style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;"
+            />
+
+            <div class="avatar" data-profile-avatar>G</div>
+
+<div class="profile-image-actions">
+  <label for="profile-image-input" class="btn btn-outline btn-small">
+    Choose Photo
+  </label>
+
+  <input
+    type="file"
+    id="profile-image-input"
+    accept="image/jpeg,image/png,image/webp"
+    hidden
+  />
+
+  <button
+    type="button"
+    class="btn btn-primary btn-small"
+    id="upload-profile-image"
+    disabled
+  >
+    Upload Photo
+  </button>
+
+  <p class="muted" id="profile-image-message">
+    JPG, PNG or WEBP · Maximum 5 MB
+  </p>
+</div>
+
+<h2 data-profile-name>Loading...</h2>
+            <p class="muted" data-profile-email></p>
+
+            <span class="tag">GYMBUDDY MEMBER</span>
+
             <ul class="checklist">
               <li>Fitness goals</li>
               <li>Preferred training time</li>
-              <li>Gym preferences</li>
+              <li>Workout experience</li>
             </ul>
           </aside>
+
+          <!-- Editable profile -->
           <section class="card">
             <h2>Edit profile</h2>
-            <p class="muted">Demo profile · Changes are not saved.</p>
-            <form data-demo-form>
+            <p class="muted">
+              Update your details and save them to your account.
+            </p>
+
+            <form id="profile-form">
+
               <div class="field">
-                <label for="name">Display name</label
-                ><input id="name" placeholder="Enter your name" />
+                <label for="name">Display name</label>
+                <input id="name" name="name" type="text"
+                  maxlength="80" required />
               </div>
+
               <div class="field">
-                <label for="goal">Fitness goal</label
-                ><select id="goal">
-                  <option>General Fitness</option>
-                  <option>Muscle Gain</option>
-                  <option>Weight Loss</option>
-                  <option>Strength Training</option>
+                <label for="age">Age</label>
+                <input id="age" name="age" type="number"
+                  min="13" max="100" />
+              </div>
+
+              <div class="field">
+                <label for="gender">Gender</label>
+                <select id="gender" name="gender">
+                  <option value="">Select gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                  <option value="prefer_not_to_say">Prefer not to say</option>
                 </select>
               </div>
+
               <div class="field">
-                <label for="time">Preferred workout time</label
-                ><select id="time">
-                  <option>Morning</option>
-                  <option>Afternoon</option>
-                  <option>Evening</option>
-                  <option>Flexible</option>
+                <label for="city">City</label>
+                <input id="city" name="city" type="text"
+                  maxlength="100" />
+              </div>
+
+              <div class="field">
+                <label for="goal">Fitness goal</label>
+                <select id="goal" name="fitnessGoal">
+                  <option value="">Select fitness goal</option>
+                  <option value="general_fitness">General Fitness</option>
+                  <option value="muscle_gain">Muscle Gain</option>
+                  <option value="weight_loss">Weight Loss</option>
+                  <option value="strength">Strength Training</option>
+                  <option value="endurance">Endurance</option>
+                  <option value="flexibility">Flexibility</option>
                 </select>
               </div>
+
               <div class="field">
-                <label for="gym">Gym or area (optional)</label
-                ><input id="gym" placeholder="Your preferred gym or area" />
+                <label for="experience">Experience level</label>
+                <select id="experience" name="experienceLevel">
+                  <option value="">Select experience</option>
+                  <option value="beginner">Beginner</option>
+                  <option value="intermediate">Intermediate</option>
+                  <option value="advanced">Advanced</option>
+                </select>
               </div>
+
               <div class="field">
-                <label for="bio">About you</label
-                ><textarea
-                  id="bio"
-                  placeholder="Share your fitness interests..."
-                ></textarea>
+                <label for="time">Preferred workout time</label>
+                <select id="time" name="preferredWorkoutTime">
+                  <option value="">Select workout time</option>
+                  <option value="early_morning">Early Morning</option>
+                  <option value="morning">Morning</option>
+                  <option value="afternoon">Afternoon</option>
+                  <option value="evening">Evening</option>
+                  <option value="night">Night</option>
+                  <option value="flexible">Flexible</option>
+                </select>
               </div>
-              <button class="btn btn-primary" type="submit">
-                Save Preview
+
+              <div class="field">
+                <label for="bio">About you</label>
+                <textarea id="bio" name="bio"
+                  maxlength="300"
+                  placeholder="Share your fitness interests..."></textarea>
+              </div>
+
+              <button class="btn btn-primary" type="submit" id="save-profile">
+                Save Profile
               </button>
-              <p class="notice" data-message aria-live="polite"></p>
+
+              <p class="notice" data-profile-message aria-live="polite"></p>
             </form>
           </section>
         </div>
       </div>
     </main>
-    <!-- Main page content ends here. -->
+
     <footer class="footer">
       <div class="container footer-inner">
-        <span>© 2026 GymBuddy · Find your fitness community.</span
-        ><span>Move together. Stay consistent.</span>
+        <span>© 2026 GymBuddy · Find your fitness community.</span>
+        <span>Move together. Stay consistent.</span>
       </div>
     </footer>
+
     <script src="script.js"></script>
   </body>
 </html>

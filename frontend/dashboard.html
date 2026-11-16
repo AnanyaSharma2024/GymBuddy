@@ -1,6 +1,4 @@
 <!doctype html>
-<!-- Dashboard page: central starting point for the signed-in user experience. -->
-
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -8,75 +6,203 @@
     <meta name="theme-color" content="#090c0a" />
     <title>Dashboard | GymBuddy</title>
     <link rel="stylesheet" href="style.css" />
+    <script src="auth-guard.js"></script>
   </head>
+
   <body>
-    <!-- Shared navigation: links to the main GymBuddy pages. -->
     <header class="navbar">
       <a href="index.html" class="logo">Gym<span>Buddy</span></a>
+
       <nav>
-        <a class="active" href="dashboard.html">Dashboard</a
-        ><a class="" href="buddy.html">Find Buddies</a
-        ><a class="" href="requests.html">Requests</a
-        ><a class="" href="chat.html">Chat</a
-        ><a class="" href="gyms.html">Gyms</a
-        ><a class="" href="workouts.html">Workouts</a
-        ><a class="" href="profile.html">Profile</a>
+        <a class="active" href="dashboard.html">Dashboard</a>
+        <a href="buddy.html">Find Buddies</a>
+        <a href="requests.html">Requests</a>
+        <a href="chat.html">Chat</a>
+        <a href="gyms.html">Gyms</a>
+        <a href="workouts.html">Workouts</a>
+        <a href="profile.html">Profile</a>
+        <a href="#admin-panel" id="admin-nav-link" hidden>Admin Panel</a>
       </nav>
-      <a class="btn btn-outline btn-small" href="index.html">Log Out</a>
+
+      <button class="btn btn-outline btn-small" type="button" data-logout>
+        Log Out
+      </button>
     </header>
-    <!-- Main page content starts here. -->
+
     <main>
       <div class="container">
+
+        <!-- Dashboard Heading -->
         <section class="page-heading">
           <p class="eyebrow">YOUR GYMBUDDY SPACE</p>
           <h1>Your <span class="accent">dashboard.</span></h1>
           <p class="lead">Your fitness tools, all in one place.</p>
         </section>
+
+        <!-- Logged-in User Information -->
+        <section class="section" style="padding-top: 10px">
+          <div class="card">
+            <div style="display: flex; align-items: center; gap: 16px;">
+              <img
+                data-user-image
+                src=""
+                alt="Profile picture"
+                hidden
+                style="width: 64px; height: 64px; border-radius: 50%; object-fit: cover;"
+              />
+
+              <div>
+                <p class="eyebrow">WELCOME BACK</p>
+                <h2 data-user-name>Loading your profile...</h2>
+                <p class="muted" data-user-email></p>
+                <p class="muted" data-user-goal></p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Normal User Features -->
         <section class="section" style="padding-top: 18px">
           <div class="grid">
-            <a class="card" href="profile.html"
-              ><div class="icon-box">◎</div>
+
+            <a class="card" href="profile.html">
+              <div class="icon-box">◎</div>
               <h3>My Profile</h3>
               <p>Manage your fitness details.</p>
-              <span class="tag">OPEN PROFILE ↗</span></a
-            ><a class="card" href="buddy.html"
-              ><div class="icon-box">⌕</div>
+              <span class="tag">OPEN PROFILE ↗</span>
+            </a>
+
+            <a class="card" href="buddy.html">
+              <div class="icon-box">⌕</div>
               <h3>Find Buddies</h3>
               <p>Find your workout partner.</p>
-              <span class="tag">EXPLORE MEMBERS ↗</span></a
-            ><a class="card" href="requests.html"
-              ><div class="icon-box">↔</div>
+              <span class="tag">EXPLORE MEMBERS ↗</span>
+            </a>
+
+            <a class="card" href="requests.html">
+              <div class="icon-box">↔</div>
               <h3>Buddy Requests</h3>
               <p>Manage buddy requests.</p>
-              <span class="tag">VIEW REQUESTS ↗</span></a
-            ><a class="card" href="chat.html"
-              ><div class="icon-box">✉</div>
+              <span class="tag">VIEW REQUESTS ↗</span>
+            </a>
+
+            <a class="card" href="chat.html">
+              <div class="icon-box">✉</div>
               <h3>Chat</h3>
               <p>Chat with your buddies.</p>
-              <span class="tag">OPEN CHAT ↗</span></a
-            ><a class="card" href="gyms.html"
-              ><div class="icon-box">⌂</div>
+              <span class="tag">OPEN CHAT ↗</span>
+            </a>
+
+            <a class="card" href="gyms.html">
+              <div class="icon-box">⌂</div>
               <h3>Explore Gyms</h3>
               <p>Explore nearby gym options.</p>
-              <span class="tag">FIND A GYM ↗</span></a
-            ><a class="card" href="workouts.html"
-              ><div class="icon-box">✦</div>
+              <span class="tag">FIND A GYM ↗</span>
+            </a>
+
+            <a class="card" href="workouts.html">
+              <div class="icon-box">✦</div>
               <h3>Workouts</h3>
               <p>Browse workout ideas.</p>
-              <span class="tag">VIEW WORKOUTS ↗</span></a
-            >
+              <span class="tag">VIEW WORKOUTS ↗</span>
+            </a>
+
           </div>
-          <p class="notice">Demo preview · Backend not connected.</p>
+
+          <p class="notice">
+            Dashboard features are being connected to the backend.
+          </p>
         </section>
+
+        <!-- ADMIN PANEL: Admin Accounts Only -->
+        <section class="section" id="admin-panel" hidden>
+
+          <div class="page-heading">
+            <p class="eyebrow">GYMBUDDY MANAGEMENT</p>
+            <h2>Admin <span class="accent">Panel.</span></h2>
+            <p class="lead">
+              Manage gym approvals and community safety.
+            </p>
+          </div>
+
+          <!-- Admin Statistics -->
+          <div class="grid">
+
+            <div class="card">
+              <p class="eyebrow">PENDING GYMS</p>
+              <h2 id="pending-gym-count">—</h2>
+              <p class="muted">Waiting for verification</p>
+            </div>
+
+            <div class="card">
+              <p class="eyebrow">USER REPORTS</p>
+              <h2 id="pending-report-count">Coming soon</h2>
+              <p class="muted">Reports awaiting review</p>
+            </div>
+
+          </div>
+
+          <!-- Gym Approval Management -->
+          <section class="section">
+
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">GYM MANAGEMENT</p>
+                <h2>Pending gym approvals</h2>
+                <p class="muted">
+                  Review submitted gyms before marking them verified.
+                </p>
+              </div>
+
+              <button
+                class="btn btn-outline"
+                type="button"
+                id="refresh-gyms"
+              >
+                Refresh
+              </button>
+            </div>
+
+            <p
+              class="notice"
+              id="admin-gym-message"
+              aria-live="polite"
+            ></p>
+
+            <div class="grid" id="admin-gym-list"></div>
+
+            <div class="card hidden" id="admin-gym-empty">
+              <h3>No pending gyms</h3>
+              <p class="muted">
+                All submitted gyms have been reviewed.
+              </p>
+            </div>
+
+          </section>
+
+          <!-- User Reports -->
+          <section class="section">
+            <div class="card">
+              <p class="eyebrow">COMMUNITY SAFETY</p>
+              <h2>User reports</h2>
+              <p class="muted">
+                User reporting and moderation tools will be connected here.
+              </p>
+            </div>
+          </section>
+
+        </section>
+
       </div>
     </main>
-    <!-- Main page content ends here. -->
+
     <footer class="footer">
       <div class="container footer-inner">
-        <span>© 2026 GymBuddy · Find your fitness community.</span
-        ><span>Move together. Stay consistent.</span>
+        <span>© 2026 GymBuddy · Find your fitness community.</span>
+        <span>Move together. Stay consistent.</span>
       </div>
     </footer>
+
     <script src="script.js"></script>
   </body>
 </html>

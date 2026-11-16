@@ -13,6 +13,7 @@ router.get('/recommendations', validate({ query: recommendationsQuerySchema }), 
 router.get('/nearby', validate({ query: nearbyQuerySchema }), controller.nearby);
 
 router.get('/requests', validate({ query: listRequestsQuerySchema }), controller.listRequests);
+router.get('/connections', controller.listConnections);
 router.post(
   '/requests/:userId',
   buddyRequestLimiter,

@@ -13,6 +13,24 @@ const googleInit = asyncHandler(async (req, res) => {
   const { authUrl, state } = await authService.initGoogleAuth(codeChallenge);
   return success(res, { message: 'Redirect user to authUrl', data: { authUrl, state } });
 });
+// GET /api/auth/google/callback
+// Google redirects the browser here after authorization.
+const googleRedirect = (req, res) => {
+  const { code, state, error, error_description } = req.query;
+
+  const params = new URLSearchParams();
+
+  if (code) params.set('code', code);
+  if (state) params.set('state', state);
+  if (error) params.set('error', error);
+  if (error_description) {
+    params.set('error_description', error_description);
+  }
+
+  return res.redirect(
+    `/auth-callback.html?${params.toString()}`
+  );
+};
 
 // POST /api/auth/google/callback
 // Body: { code, state, codeVerifier }
@@ -86,5 +104,5 @@ const me = asyncHandler(async (req, res) => {
 });
 
 module.exports = {
-  googleInit, googleCallback, refresh, logout, logoutAll, me,
+  googleInit, googleCallback, refresh, logout, logoutAll, me, googleRedirect,
 };
