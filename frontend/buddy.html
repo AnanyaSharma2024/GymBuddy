@@ -20,7 +20,7 @@
         <a href="requests.html">Requests</a>
         <a href="chat.html">Chat</a>
         <a href="gyms.html">Gyms</a>
-        <a href="workouts.html">Workouts</a>
+        
         <a href="profile.html">Profile</a>
       </nav>
 
@@ -65,7 +65,40 @@
         </div>
 
         <section class="grid" id="buddy-grid" aria-live="polite"></section>
+<section class="card hidden" id="report-form-section">
+  <h2>Report User</h2>
+  <p class="muted" id="report-user-name"></p>
 
+  <form id="report-user-form">
+    <label for="report-reason">Reason</label>
+    <select id="report-reason" required>
+      <option value="">Select a reason</option>
+      <option value="harassment">Harassment</option>
+      <option value="spam">Spam</option>
+      <option value="fake_profile">Fake Profile</option>
+      <option value="inappropriate_behavior">Inappropriate Behavior</option>
+      <option value="other">Other</option>
+    </select>
+
+    <label for="report-details">Additional Details (Optional)</label>
+    <textarea
+      id="report-details"
+      maxlength="1000"
+      placeholder="Describe the issue..."
+    ></textarea>
+
+    <div class="card-actions">
+      <button class="btn btn-primary" type="submit" id="submit-report">
+        Submit Report
+      </button>
+      <button class="btn btn-outline" type="button" id="cancel-report">
+        Cancel
+      </button>
+    </div>
+
+    <p class="notice" id="report-message" aria-live="polite"></p>
+  </form>
+</section>
         <p class="empty hidden" id="buddy-empty">
           No matching buddies found. Try another search or filter.
         </p>
@@ -87,3 +120,4 @@
     <script src="buddy.js"></script>
   </body>
 </html>
+

@@ -10,7 +10,15 @@ const buddyFilter = document.querySelector("#buddy-filter");
 const buddyCount = document.querySelector("#buddy-count");
 const buddyEmpty = document.querySelector("#buddy-empty");
 const buddyMessage = document.querySelector("#buddy-message");
+const reportFormSection = document.querySelector("#report-form-section");
+const reportUserForm = document.querySelector("#report-user-form");
+const reportUserName = document.querySelector("#report-user-name");
+const reportReason = document.querySelector("#report-reason");
+const reportDetails = document.querySelector("#report-details");
+const reportMessage = document.querySelector("#report-message");
+const cancelReportButton = document.querySelector("#cancel-report");
 
+let selectedReportedUser = null;
 let buddies = [];
 
 const goalLabels = {
@@ -112,6 +120,21 @@ function createBuddyCard(user) {
   });
 
   actions.appendChild(requestButton);
+  const reportButton = document.createElement("button");
+reportButton.className = "btn btn-outline";
+reportButton.type = "button";
+reportButton.textContent = "Report User";
+
+reportButton.addEventListener("click", () => {
+  selectedReportedUser = user.id;
+  reportUserName.textContent = `Reporting: ${user.name || "GymBuddy Member"}`;
+  reportMessage.textContent = "";
+  reportUserForm.reset();
+  reportFormSection.classList.remove("hidden");
+  reportFormSection.scrollIntoView({ behavior: "smooth", block: "center" });
+});
+
+actions.appendChild(reportButton);
 
   card.append(top, tag, tags, bio, compatibility, actions);
 
@@ -223,3 +246,67 @@ buddySearch.addEventListener("input", renderBuddies);
 buddyFilter.addEventListener("change", renderBuddies);
 
 loadBuddies();
+// ============================================================================
+// REPORT USER
+// ============================================================================
+
+const submitReportButton = document.querySelector("#submit-report");
+
+cancelReportButton.addEventListener("click", () => {
+  reportUserForm.reset();
+  reportMessage.textContent = "";
+  selectedReportedUser = null;
+  reportFormSection.classList.add("hidden");
+});
+
+reportUserForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  if (!selectedReportedUser) {
+    reportMessage.textContent = "Please select a user to report.";
+    return;
+  }
+
+  try {
+    submitReportButton.disabled = true;
+    submitReportButton.textContent = "Submitting...";
+    reportMessage.textContent = "";
+
+    const response = await fetch("/api/reports", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        reportedUser: selectedReportedUser,
+        reason: reportReason.value,
+        details: reportDetails.value.trim(),
+      }),
+    });
+
+    if (response.status === 401) {
+      window.location.replace("/login.html");
+      return;
+    }
+
+    const result = await response.json();
+
+    if (!response.ok || !result.success) {
+      throw new Error(result.message || "Unable to submit report.");
+    }
+
+    reportMessage.textContent =
+      "Report submitted successfully. Our team will review it.";
+
+    reportUserForm.reset();
+    selectedReportedUser = null;
+  } catch (error) {
+    console.error("Report submission error:", error);
+    reportMessage.textContent =
+      error.message || "Unable to submit report. Please try again.";
+  } finally {
+    submitReportButton.disabled = false;
+    submitReportButton.textContent = "Submit Report";
+  }
+});

@@ -1,16 +1,18 @@
 
 document.addEventListener("DOMContentLoaded", () => {
-  const adminPanel = document.getElementById("admin-panel");
-  const adminLink = document.getElementById("admin-nav-link");
-
-  // Admin panel does not exist on other pages.
-  if (!adminPanel) return;
-
+  // Gym elements
   const gymList = document.getElementById("admin-gym-list");
   const gymCount = document.getElementById("pending-gym-count");
-  const emptyState = document.getElementById("admin-gym-empty");
-  const message = document.getElementById("admin-gym-message");
-  const refreshButton = document.getElementById("refresh-gyms");
+  const gymEmpty = document.getElementById("admin-gym-empty");
+  const gymMessage = document.getElementById("admin-gym-message");
+  const refreshGymsButton = document.getElementById("refresh-gyms");
+
+  // Report elements
+  const reportList = document.getElementById("admin-report-list");
+  const reportCount = document.getElementById("pending-report-count");
+  const reportEmpty = document.getElementById("admin-report-empty");
+  const reportMessage = document.getElementById("admin-report-message");
+  const refreshReportsButton = document.getElementById("refresh-reports");
 
   async function apiRequest(url, options = {}) {
     const response = await fetch(url, {
@@ -24,17 +26,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const result = await response.json().catch(() => ({}));
 
-    if (!response.ok) {
+    if (!response.ok || result.success === false) {
       throw new Error(result.message || "Something went wrong.");
     }
 
     return result;
   }
 
-  function showMessage(text, isError = false) {
-    message.textContent = text;
-    message.style.color = isError ? "#ef7777" : "";
+  function showGymMessage(text, isError = false) {
+    gymMessage.textContent = text;
+    gymMessage.style.color = isError ? "#ef7777" : "";
   }
+
+  function showReportMessage(text, isError = false) {
+    reportMessage.textContent = text;
+    reportMessage.style.color = isError ? "#ef7777" : "";
+  }
+
+  // ---------------- GYM MANAGEMENT ----------------
 
   function createGymCard(gym) {
     const card = document.createElement("article");
@@ -73,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
           method: "PATCH",
         });
 
-        showMessage(
+        showGymMessage(
           action === "approve"
             ? `${gym.name} approved successfully.`
             : `${gym.name} rejected.`
@@ -81,15 +90,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         await loadPendingGyms();
       } catch (error) {
-        showMessage(error.message, true);
+        showGymMessage(error.message, true);
         approveButton.disabled = false;
         rejectButton.disabled = false;
       }
     }
 
-    approveButton.addEventListener("click", () => {
-      updateGym("approve");
-    });
+    approveButton.addEventListener("click", () => updateGym("approve"));
 
     rejectButton.addEventListener("click", () => {
       if (confirm(`Are you sure you want to reject ${gym.name}?`)) {
@@ -110,7 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   async function loadPendingGyms() {
-    refreshButton.disabled = true;
+    refreshGymsButton.disabled = true;
     gymCount.textContent = "Loading...";
 
     try {
@@ -124,40 +131,173 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       gymCount.textContent = gyms.length;
-      emptyState.classList.toggle("hidden", gyms.length !== 0);
+      gymEmpty.classList.toggle("hidden", gyms.length !== 0);
     } catch (error) {
       gymCount.textContent = "—";
-      emptyState.classList.add("hidden");
-      showMessage(error.message, true);
+      gymEmpty.classList.add("hidden");
+      showGymMessage(error.message, true);
     } finally {
-      refreshButton.disabled = false;
+      refreshGymsButton.disabled = false;
     }
   }
 
-  refreshButton.addEventListener("click", loadPendingGyms);
+  // ---------------- REPORT MANAGEMENT ----------------
+
+  function createReportCard(report) {
+    const card = document.createElement("article");
+    card.className = "card";
+
+    const heading = document.createElement("h3");
+    heading.textContent = `Report: ${report.reportedUser?.name || "Unknown User"}`;
+
+    const reporter = document.createElement("p");
+    reporter.textContent =
+      `Reported by: ${report.reporter?.name || "Unknown User"}`;
+
+    const reason = document.createElement("p");
+    reason.textContent =
+      `Reason: ${report.reason.replaceAll("_", " ")}`;
+
+    const details = document.createElement("p");
+    details.className = "muted";
+    details.textContent =
+      `Details: ${report.details || "No additional details provided."}`;
+
+    const date = document.createElement("p");
+    date.className = "muted";
+    date.textContent =
+      `Submitted: ${new Date(report.createdAt).toLocaleString()}`;
+
+    const currentStatus = document.createElement("p");
+    currentStatus.textContent = `Current status: ${report.status}`;
+
+    const statusSelect = document.createElement("select");
+
+    const placeholder = document.createElement("option");
+    placeholder.value = "";
+    placeholder.textContent = "Select new status";
+    placeholder.selected = true;
+    statusSelect.appendChild(placeholder);
+
+    ["reviewing", "resolved", "dismissed"].forEach((status) => {
+      const option = document.createElement("option");
+      option.value = status;
+      option.textContent =
+        status.charAt(0).toUpperCase() + status.slice(1);
+      statusSelect.appendChild(option);
+    });
+
+    const notesLabel = document.createElement("label");
+    notesLabel.textContent = "Resolution notes (optional)";
+
+    const notes = document.createElement("textarea");
+    notes.maxLength = 1000;
+    notes.placeholder = "Add notes about your decision...";
+
+    const updateButton = document.createElement("button");
+    updateButton.className = "btn btn-primary";
+    updateButton.type = "button";
+    updateButton.textContent = "Update Report";
+    updateButton.disabled = true;
+
+    statusSelect.addEventListener("change", () => {
+      updateButton.disabled = !statusSelect.value;
+    });
+
+    updateButton.addEventListener("click", async () => {
+      if (!statusSelect.value) return;
+
+      updateButton.disabled = true;
+      updateButton.textContent = "Updating...";
+
+      try {
+        await apiRequest(`/api/admin/reports/${report._id}`, {
+          method: "PATCH",
+          body: JSON.stringify({
+            status: statusSelect.value,
+            resolutionNotes: notes.value.trim(),
+          }),
+        });
+
+        showReportMessage("Report status updated successfully.");
+        await loadReports();
+      } catch (error) {
+        showReportMessage(error.message, true);
+        updateButton.disabled = false;
+        updateButton.textContent = "Update Report";
+      }
+    });
+
+    card.append(
+      heading,
+      reporter,
+      reason,
+      details,
+      date,
+      currentStatus,
+      notesLabel,
+      notes,
+      statusSelect,
+      updateButton
+    );
+
+    return card;
+  }
+
+  async function loadReports() {
+    refreshReportsButton.disabled = true;
+    reportCount.textContent = "Loading...";
+
+    try {
+      const result = await apiRequest("/api/admin/reports");
+      const reports = result.data || [];
+
+      reportList.replaceChildren();
+
+      reports.forEach((report) => {
+        reportList.appendChild(createReportCard(report));
+      });
+
+      const pending = reports.filter(
+        (report) =>
+          report.status === "open" || report.status === "reviewing"
+      ).length;
+
+      reportCount.textContent = pending;
+      reportEmpty.classList.toggle("hidden", reports.length !== 0);
+    } catch (error) {
+      reportCount.textContent = "—";
+      reportEmpty.classList.add("hidden");
+      showReportMessage(error.message, true);
+    } finally {
+      refreshReportsButton.disabled = false;
+    }
+  }
+
+  // ---------------- ADMIN AUTHENTICATION ----------------
 
   async function initializeAdmin() {
     try {
-      const result = await apiRequest("/api/users/me");
+      const result = await apiRequest("/api/auth/me");
       const user = result.data || result;
 
       if (user.role !== "admin") {
-        adminPanel.hidden = true;
+        window.location.replace("dashboard.html");
         return;
       }
 
-      adminPanel.hidden = false;
-
-      if (adminLink) {
-        adminLink.hidden = false;
-      }
-
-      await loadPendingGyms();
+      await Promise.all([
+        loadPendingGyms(),
+        loadReports(),
+      ]);
     } catch (error) {
-      adminPanel.hidden = true;
       console.error("Admin initialization error:", error);
+      window.location.replace("login.html");
     }
   }
+
+  refreshGymsButton.addEventListener("click", loadPendingGyms);
+  refreshReportsButton.addEventListener("click", loadReports);
 
   initializeAdmin();
 });

@@ -8,7 +8,6 @@
     "gyms.html",
     "profile.html",
     "requests.html",
-    "workouts.html",
     "admin.html"
   ];
 

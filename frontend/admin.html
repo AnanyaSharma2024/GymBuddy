@@ -19,7 +19,7 @@
         <a href="requests.html">Requests</a>
         <a href="chat.html">Chat</a>
         <a href="gyms.html">Gyms</a>
-        <a href="workouts.html">Workouts</a>
+        
         <a href="profile.html">Profile</a>
         <a class="active" href="admin.html">Admin</a>
       </nav>
@@ -87,15 +87,33 @@
         </section>
 
         <section class="section">
-          <div class="card">
-            <p class="eyebrow">COMMUNITY SAFETY</p>
-            <h2>User reports</h2>
-            <p class="muted">
-              User reporting and moderation tools will appear here once
-              the report system is connected.
-            </p>
-          </div>
-        </section>
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">COMMUNITY SAFETY</p>
+      <h2>User reports</h2>
+      <p class="muted">
+        Review reports and take action when necessary.
+      </p>
+    </div>
+
+    <button
+      class="btn btn-outline"
+      type="button"
+      id="refresh-reports"
+    >
+      Refresh
+    </button>
+  </div>
+
+  <p class="notice" id="admin-report-message" aria-live="polite"></p>
+
+  <div class="grid" id="admin-report-list"></div>
+
+  <div class="card hidden" id="admin-report-empty">
+    <h3>No reports found</h3>
+    <p class="muted">There are currently no user reports.</p>
+  </div>
+</section>
       </div>
     </main>
 
@@ -110,3 +128,4 @@
     <script src="admin.js"></script>
   </body>
 </html>
+
